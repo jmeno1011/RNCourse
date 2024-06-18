@@ -2,6 +2,7 @@ import { useState } from "react";
 import { StyleSheet, View, FlatList, Button } from "react-native";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [modalIsVisible, setModalIsVislbe] = useState(false);
@@ -30,36 +31,39 @@ export default function App() {
   }
 
   return (
-    <View style={styles.appContainer}>
-      <Button
-        title="Add New Goal"
-        color={"#5E0ACC"}
-        onPress={startAddGoalHandler}
-      />
-      <GoalInput
-        onAddGoal={addGaolHandler}
-        visible={modalIsVisible}
-        onCancel={endAddGoalHandler}
-      />
-      <View style={styles.goalsContainer} addGaolHandler={addGaolHandler}>
-        <FlatList
-          data={courseGoals}
-          renderItem={(itemData) => {
-            return (
-              <GoalItem
-                text={itemData.item.text}
-                onDeleteItem={deleteGoalHandler}
-                id={itemData.item.id}
-              />
-            );
-          }}
-          alwaysBounceVertical={false}
-          keyExtractor={(item, index) => {
-            return item.id;
-          }}
-        ></FlatList>
+    <>
+      <StatusBar />
+      <View style={styles.appContainer}>
+        <Button
+          title="Add New Goal"
+          color={"#B180f0"}
+          onPress={startAddGoalHandler}
+        />
+        <GoalInput
+          onAddGoal={addGaolHandler}
+          visible={modalIsVisible}
+          onCancel={endAddGoalHandler}
+        />
+        <View style={styles.goalsContainer} addGaolHandler={addGaolHandler}>
+          <FlatList
+            data={courseGoals}
+            renderItem={(itemData) => {
+              return (
+                <GoalItem
+                  text={itemData.item.text}
+                  onDeleteItem={deleteGoalHandler}
+                  id={itemData.item.id}
+                />
+              );
+            }}
+            alwaysBounceVertical={false}
+            keyExtractor={(item, index) => {
+              return item.id;
+            }}
+          ></FlatList>
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
